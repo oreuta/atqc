@@ -1,3 +1,4 @@
+import pickle
 class Warrior():
     '''
     Warrior is a base class for all wariors in the Battle.
@@ -40,7 +41,7 @@ class Warrior():
             print("GOD: {} is dead. I'm sorry...".format(self.__name))
             return
         if damage > self.__strength:
-            make_sound("It's too hard to me...")
+            self.make_sound("It's too hard to me...")
             return
         self.make_sound("Taste my {}-power hit!".format(damage))
         enemy.defend(damage)
@@ -58,11 +59,48 @@ class Warrior():
             self.__strength,
             self.__health
         ))
+    def wait(self):
+        self.__health = 1.1*self.__health
+        self.__strength = 1.1*self.__strength
+        self.make_sound("I will wait. Health increased to {:.2f}, Strength increased to {:.2f}!".format(
+                        self.__health,
+                        self.__strength
+        ))
+
+    def save(self):
+        f = open('save.txt', 'wb')
+        pickle.dump('Test content without information about Warrior', f)
+        f.close()
+        print("Warrior's state has been saved")
+        return
+
+    def restore(self):
+        f = open('save.txt', 'rb')
+        stored_state = pickle.load(f)
+        print(stored_state)
+        return
+    
+   # def experiance(self):
+   #    exp==0
+   #    if self.__win == True:
+   #      self.__exp +=self.__exp 
+   #      self.__damage = 1.1*self.__damage
+   #    return self.__exp
+    
+class Elf(Warrior):
+    def __init__(self,name):
+        Warrior.__init__(self,name,0.3)
+        self.make_sound('I am Elf')
         
-  
+class Ork(Warrior):
+    def __init__(self,name):
+        Warrior.__init__(self,name, 0.5)
+        self.make_sound('I am Ork')
 
-
-
+class Gnome(Warrior):
+    def __init__(self,name):
+        Warrior.__init__(self, name, 0.6)
+        self.make_sound('I am Gnome')
 
     
 

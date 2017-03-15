@@ -55,9 +55,15 @@ class Warrior():
 
     def how_are_you(self):
         self.make_sound("I'm fine, tnx! My strength is {} and health is {}".format(
-            self.__strength,
-            self.__health
+            round(self.__strength),
+            round(self.__health)
         ))
+
+    def wait(self):
+        self.__strength *= 1.1
+        self.__health *= 1.1
+
+
         
   
 

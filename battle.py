@@ -40,7 +40,7 @@ class Warrior():
             print("GOD: {} is dead. I'm sorry...".format(self.__name))
             return
         if damage > self.__strength:
-            make_sound("It's too hard to me...")
+            self.make_sound("It's too hard to me...")
             return
         self.make_sound("Taste my {}-power hit!".format(damage))
         enemy.defend(damage)

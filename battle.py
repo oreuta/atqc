@@ -90,9 +90,41 @@ class Elf(Warrior):
        Warrior.__init__(self, name, hsfactor = 0.3)
 
 
+'''Gnome'''
+
+class Gnome(Warrior):
+    def __init__(self, name):
+       Warrior.__init__(self, name, hsfactor = 0.4)
 
 
+'''Orc'''
 
+class Orc(Warrior):
+    def __init__(self, name):
+       Warrior.__init__(self, name, hsfactor = 0.7)
+    
+    def attack(self, enemy, damage = 10):
+        pass
+        
+        '''if self.is_dead():
+            print("GOD: {} is dead. I'm sorry...".format(self.__name))
+            return
+        if damage > self.__strength:
+            make_sound("It's too hard to me...")
+            return
+        self.make_sound("Taste my {}-power hit!".format(damage))
+        enemy.defend(damage)
+        self.__strength -= damage'''
+
+
+'''Test'''
+
+def test():
+    return(
+    e == Elf('Elf'),
+    o == Orc('Orc'))
+
+ 
 
     
 

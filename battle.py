@@ -6,11 +6,12 @@ class Warrior():
     
     #Power is the whole amount of energy that the warrior has.
     #It is distributed between
-    #strength and health according to the hsfactor:
+    #strength and healt h according to the hsfactor:
     # strength = __power * hsfactor
     # health   = __power * (1 - hsfactor)
     __power = 100
-
+    __experience = 0
+    
     @classmethod
     def get_power(cls):
         return cls.__power
@@ -39,12 +40,21 @@ class Warrior():
         if self.is_dead():
             print("GOD: {} is dead. I'm sorry...".format(self.__name))
             return
-        if damage > self.__strength:
-            make_sound("It's too hard to me...")
+
+        if enemy.is_dead():
+            self.make_sound("Oh snap! My enemy is already dead!")
             return
-        self.make_sound("Taste my {}-power hit!".format(damage))
-        enemy.defend(damage)
+
+        if damage > self.__strength:
+            self.make_sound("It's too hard to me...")
+            return
+
+        bonus_damage =  (damage * (0.1 * self.__experience))
+        self.make_sound("Taste my {}-power hit!".format(damage + bonus_damage))
+        enemy.defend(damage + bonus_damage)
         self.__strength -= damage
+        if enemy.is_dead():
+            self.increase_experience()
         
     def defend(self, damage):
         self.__health -= damage
@@ -59,9 +69,45 @@ class Warrior():
             self.__health
         ))
         
-  
+    def wait(self):
+        self.__strength = self.__strength + (self.__strength * 0.1) 
+        self.__health = self.__health + (self.__health * 0.1)
+        self.make_sound("I feel myself better after waiting, tnx! My strength is {} and health is {}".format(
+            self.__strength,
+            self.__health
+        ))
+
+    def increase_experience(self):
+        self.__experience += 1
+        self.make_sound("Yahoooo my experience is increased! {}".format(self.__experience))
+
+        
+class Elf(Warrior):
+    def __init__(self, name):
+        super().__init__(name,  0.3)
+
+class Gnome(Warrior):
+    def __init__(self, name):
+        super().__init__(name,  0.5)
+
+class Orc(Warrior):
+    def __init__(self, name):
+        super().__init__(name, 0.7)
 
 
+war1 = Elf("Princess Rose")
+war2 = Gnome("King Wen")
+war3 = Orc("King Gristle")
+
+war1.attack(war2, 25)
+war1.wait()
+war1.wait()
+war1.wait()
+war1.wait()
+war1.wait()
+war1.wait()
+war1.attack(war2, 25)
+war1.attack(war3, 5)
 
 
     

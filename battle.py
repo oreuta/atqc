@@ -86,20 +86,9 @@ class Exp():
 '''Elf'''
 
 class Elf(Warrior):
-    def __init__(self, name, hsfactor = 0.3):
-        self.__name = name.upper()
-        self.__health = round(Warrior.get_power() * hsfactor)
-        self.__strength = round(Warrior.get_power() * (1 - hsfactor))
-        power = self.__health + self.__strength # must be 1 after rounding
-        if power > 1:
-            self.__health - 1
-        elif power < 1:
-            self.__health + 1
-        self.make_sound("I've born! My strenght is {} and health is {}".format(
-            round(self.__strength),
-            round(self.__health)
-        ))
-    
+    def __init__(self, name):
+       Warrior.__init__(self, name, hsfactor = 0.3)
+
 
 
 

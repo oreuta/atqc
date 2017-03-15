@@ -19,6 +19,7 @@ class Warrior():
         self.__name = name.upper()
         self.__health = round(Warrior.get_power() * hsfactor)
         self.__strength = round(Warrior.get_power() * (1 - hsfactor))
+        self.__experience = 0
         power = self.__health + self.__strength # must be 1 after rounding
         if power > 1:
             self.__health - 1
@@ -42,8 +43,16 @@ class Warrior():
         if damage > self.__strength:
             self.make_sound("It's too hard to me...")
             return
-        self.make_sound("Taste my {}-power hit!".format(damage))
-        enemy.defend(damage)
+        if self.__experience > 0:
+            self.make_sound("Taste my {}-power hit!".format(damage * (1+(self.__experience/10))))
+            enemy.defend(damage * 1+(self.__experience/100))
+        else:
+            self.make_sound("Taste my {}-power hit!".format(damage))
+            enemy.defend(damage)
+
+        if enemy.is_dead():
+            self.__experience += 1
+            self.make_sound("My experience is now: {}".format(self.__experience))
         self.__strength -= damage
         
     def defend(self, damage):

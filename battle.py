@@ -24,6 +24,10 @@ class Warrior():
             self.__health - 1
         elif power < 1:
             self.__health + 1
+        self.make_sound("I've born! My strenght is {} and health is {}".format(
+                round(self.__strength),
+                round(self.__health)
+        ))
 
     
     def is_dead(self):
@@ -65,3 +69,23 @@ class Warrior():
             self.__strength,
             self.__health
         ))
+
+
+# Task 2: Add subclasses Elf, Gnome, Orc
+
+class Elf(Warrior):
+    def __init__(self, name):
+        Warrior.__init__(self, name, hsfactor=0.3)
+        self.make_sound = make_sound
+
+
+class Gnome(Warrior):
+    def __init__(self, name):
+        Warrior.__init__(self, name, hsfactor=0.5)
+        self.make_sound = Warrior.make_sound
+
+
+class Orc(Warrior):
+    def __init__(self, name):
+        Warrior.__init__(self, name, hsfactor=0.7)
+        self.make_sound = Warrior.make_sound

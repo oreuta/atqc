@@ -57,7 +57,7 @@ class Warrior():
     def defend(self, damage):
         self.__health -= damage
         if self.is_dead():
-            self.make_sound("...")
+            self.make_sound("Wasted")
         else:
             self.make_sound("Oh!")
 
@@ -114,14 +114,23 @@ class Orc(Warrior):
 
 
 
+
+
+'''Save'''
+
+'''f = open("C:\\war.bin", "wb")
+www = pickle. '''
+
+
 '''Test'''
 
-def test():
-    return(
-    e == Elf('Elf'),
-    o == Orc('Orc'))
+def test(): 
+    elf = Elf("Elf with 80 lvl")
+    orc = Orc("Stupid Orc Petro")
+    orc.attack(elf)
 
- 
-
+def test2():
+    elf = Elf("Elf with 80 lvl")
+    elf.attack(elf, 70)
     
 

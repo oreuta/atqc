@@ -1,4 +1,6 @@
 import pickle
+import random
+
 
 
 class Warrior():
@@ -39,7 +41,15 @@ class Warrior():
     def make_sound(self, sound):
         print("{}: {}".format(self.__name, sound))
 
-    def attack(self, enemy, damage):
+    def attack(self, enemy):
+
+        if self.__class__ == Elf:
+            damage = random.randint(1, self.__strength)
+        elif self.__class__ == Gnome:
+            damage = self.__strength/4
+        elif self.__class__ == Orc:
+            damage = 10
+
         if self.is_dead():
             print("GOD: {} is dead. I'm sorry...".format(self.__name))
             return

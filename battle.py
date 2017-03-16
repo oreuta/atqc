@@ -1,3 +1,5 @@
+import pickle
+
 class Warrior():
     '''
     Warrior is a base class for all wariors in the Battle.
@@ -70,14 +72,38 @@ class Warrior():
             self.__health
         ))
 
+# Task 1.2 Save to file(info/object)
+# Restore from file
+
+    def save(self, filename):
+        f = open(filename, 'w')
+        f.write(self.__name + ": My strenght now is {} and health is {}".format(
+            self.__strength,
+            self.__health
+        ))
+        f.close()
+
+    def save1(self, filename):
+        f = open(filename, 'wb')
+        pickle.dump(self,f)
+        f.close()
+        print('{} saved'.format(self.__name))
+
+
+    def restore(filename):
+        f = open(filename, 'rb')
+        self = pickle.load(f)
+        f.close()
+        print('{} restored'.format(self.__name))
+
 
 # Task 2: Add subclasses Elf, Gnome, Orc
 
-class Elf(Warrior):
+class Elf(Warrior):        
     def __init__(self, name):
         Warrior.__init__(self, name, hsfactor=0.3)
-        self.make_sound = make_sound
-
+        self.make_sound = Warrior.make_sound
+  
 
 class Gnome(Warrior):
     def __init__(self, name):

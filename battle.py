@@ -24,10 +24,7 @@ class Warrior():
             self.__health - 1
         elif power < 1:
             self.__health + 1
-        self.make_sound("I've born! My strenght is {} and health is {}".format(
-            round(self.__strength),
-            round(self.__health)
-        ))
+
     
     def is_dead(self):
         return self.__health <= 0
@@ -58,17 +55,13 @@ class Warrior():
             self.__strength,
             self.__health
         ))
-        
-  
 
+#Task 1.1 Define wait method
 
-
-
-    
-
-
-
-
-
-    
-
+    def wait(self):
+        self.__health = round(self.__health * 1.1)
+        self.__strength = round(self.__strength * 1.1)
+        self.make_sound("I'm waiting, My strenght now is {} and health is {}".format(
+            self.__strength,
+            self.__health
+        ))

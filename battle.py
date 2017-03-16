@@ -12,6 +12,12 @@ class Warrior():
     # strength = __power * hsfactor
     # health   = __power * (1 - hsfactor)
     __power = 100
+    __d = {"mess_ive_born": "I've born! My strenght is {} and health is {}"}
+
+    @classmethod
+
+    def get_mess(key):
+        __d[key]
 
     @classmethod
     def get_power(cls):
@@ -102,18 +108,10 @@ class Gnome(Warrior):
 class Orc(Warrior):
     def __init__(self, name):
        Warrior.__init__(self, name, hsfactor = 0.7)
-    
-    def attack(self, enemy, damage = 10):
-        
-        if self.is_dead():
-            print("GOD: {} is dead. I'm sorry...".format(self.__name))
-            return
-        if damage > self.__strength:
-            make_sound("It's too hard to me...")
-            return
-        self.make_sound("Taste my {}-power hit!".format(damage))
-        enemy.defend(damage)
-        self.__strength -= damage
+
+    def attack(self, enemy):
+        Warrior.attack(self, enemy, damage = 10)
+
 
 
 '''Test'''

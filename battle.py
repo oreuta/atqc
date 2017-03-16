@@ -85,14 +85,24 @@ class Warrior():
 class Elf(Warrior):
     def __init__(self, name):
         super().__init__(name,  0.3)
+    def __init__(self, sound):
+        super().__init__(sound)
+        self.make_sound("Yoloooo, I'm a super Elf!")
 
+   
 class Gnome(Warrior):
     def __init__(self, name):
         super().__init__(name,  0.5)
+    def __init__(self, sound):
+        super().__init__(sound)
+        self.make_sound("Pffff, I'm a super Gnome!")
 
 class Orc(Warrior):
     def __init__(self, name):
         super().__init__(name, 0.7)
+    def __init__(self, sound):
+        super().__init__(sound)
+        self.make_sound("Arrrrrrr, I'm a super Orc!")
 
 
 war1 = Elf("Princess Rose")
@@ -100,9 +110,6 @@ war2 = Gnome("King Wen")
 war3 = Orc("King Gristle")
 
 war1.attack(war2, 25)
-war1.wait()
-war1.wait()
-war1.wait()
 war1.wait()
 war1.wait()
 war1.wait()

@@ -1,3 +1,5 @@
+import random
+
 class Warrior():
     '''
     Warrior is a base class for all wariors in the Battle.
@@ -9,60 +11,142 @@ class Warrior():
     #strength and health according to the hsfactor:
     # strength = __power * hsfactor
     # health   = __power * (1 - hsfactor)
-    __power = 100
-
-    @classmethod
-    def get_power(cls):
-        return cls.__power
+    _power = 100
+    _mess = {
+        "born": "I've been born! My strenght is {} and health is {}",
+        "hard": "It's too hard to me...",
+        "hit": "Taste my {}-power hit!",
+        "oh!": "Oh!", 
+        "...": "...", # Dead sound
+        "fine": "I'm fine, tnx! My strength is {} and health is {}",
+    }
     
     def __init__(self, name, hsfactor = 0.5):
-        self.__name = name.upper()
-        self.__health = round(Warrior.get_power() * hsfactor)
-        self.__strength = round(Warrior.get_power() * (1 - hsfactor))
-        power = self.__health + self.__strength # must be 1 after rounding
+        self._name = name.upper()
+        self._health = round(type(self)._power * hsfactor)
+        self._strength = round(type(self)._power * (1 - hsfactor))
+        self._exp = 0
+        power = self._health + self._strength # must be 1 after rounding
         if power > 1:
-            self.__health - 1
+            self._health - 1
         elif power < 1:
-            self.__health + 1
-        self.make_sound("I've born! My strenght is {} and health is {}".format(
-            round(self.__strength),
-            round(self.__health)
+            self._health + 1
+        self.make_sound(type(self)._mess["born"].format(
+            round(self._strength),
+            round(self._health)
         ))
+
+    @property
+    def name(self):
+        return self._name
+
     
     def is_dead(self):
-        return self.__health <= 0
+        return self._health <= 0
+
 
     def make_sound(self, sound):
-        print("{}: {}".format(self.__name, sound))   
-    
+        print("{}: {}".format(self._name, sound))     
+
+
     def attack(self, enemy, damage):
         if self.is_dead():
-            print("GOD: {} is dead. I'm sorry...".format(self.__name))
+            print("GOD: {} is dead. I'm sorry...".format(self._name))
             return
-        if damage > self.__strength:
-            make_sound("It's too hard to me...")
+        
+        if damage > self._strength:
+            make_sound(type(self)._mess["hard"])
             return
-        self.make_sound("Taste my {}-power hit!".format(damage))
-        enemy.defend(damage)
-        self.__strength -= damage
+        self.make_sound(type(self)._mess["hit"].format(damage))
+
+        enemy_was_alive = not enemy.is_dead()
+        enemy.defend(damage + round(damage*self._exp*10/100) )
+        if enemy_was_alive and enemy.is_dead() : self._exp += 1
+
+        self._strength -= damage
+
         
     def defend(self, damage):
-        self.__health -= damage
+        self._health -= damage
         if self.is_dead():
-            self.make_sound("...")
+            self.make_sound(type(self)._mess["..."])
         else:
-            self.make_sound("Oh!")
+            self.make_sound(type(self)._mess["oh!"])
 
     def how_are_you(self):
-        self.make_sound("I'm fine, tnx! My strength is {} and health is {}".format(
-            self.__strength,
-            self.__health
+        self.make_sound("fine".format(
+            self._strength,
+            self._health
         ))
         
   
 
+class Orc(Warrior):
+    _mess = {
+        "born": "OOOOrc!!! {}/{}",
+        "hard": "No. Weak",
+        "hit": "Hrrrakh!!! {}",
+        "oh!": "Uuuu...", 
+        "...": ".o.", # Dead sound
+        "fine": "Ha-ha! {}/{}",
+    }
+    def __init__(self, name):
+        super().__init__(name, hsfactor=0.7)
+
+    def attack(self, enemy):
+        super().attack(enemy, damage=10)
 
 
+class Elf(Warrior):
+    _mess = {
+        "born": "A New Elf has been born! {} - {}",
+        "hard": "Not enough of magic...",
+        "hit": "Get my magic sword! {} ",
+        "oh!": "Yes, it's hurt...", 
+        "...": " ~~~ ", # Dead sound
+        "fine": "Great! {}/{}",
+    }
+    def __init__(self, name):
+        super().__init__(name, hsfactor=0.3)
+
+    def attack(self, enemy):
+        damage = random.randint(
+            round(0.1*self._strength),
+            self._strength)
+        super().attack(enemy, damage)
+        
+
+class Gnome(Warrior):
+    _mess = {
+        "born": "Gnome. {}*{}",
+        "hard": "No.",
+        "hit": "Hit. {} ",
+        "oh!": "@d.$A!", 
+        "...": " . ", # Dead sound
+        "fine": "{}*{}",
+    }
+    def __init__(self, name):
+        super().__init__(name, hsfactor=0.5)
+
+    def attack(self, enemy):
+        damage = round(0.25*self._strength)
+        super().attack(enemy, damage)
+
+
+class Battle:
+
+    def __init__(self, w1, w2):
+        self.__w1 = w1
+        self.__w2 = w2
+
+
+    def fight(self):
+        while not (self.__w1.is_dead() or self.__w2.is_dead()):
+            self.__w1.attack(self.__w2)
+            self.__w2.attack(self.__w1)
+        
+        winnew = self.__w1 if self.__w2.is_dead() else self.__w2
+        print("GOD: This time {} was more lucky!".format(self.__w1.name))
 
     
 

@@ -104,9 +104,8 @@ class Orc(Warrior):
        Warrior.__init__(self, name, hsfactor = 0.7)
     
     def attack(self, enemy, damage = 10):
-        pass
         
-        '''if self.is_dead():
+        if self.is_dead():
             print("GOD: {} is dead. I'm sorry...".format(self.__name))
             return
         if damage > self.__strength:
@@ -114,7 +113,7 @@ class Orc(Warrior):
             return
         self.make_sound("Taste my {}-power hit!".format(damage))
         enemy.defend(damage)
-        self.__strength -= damage'''
+        self.__strength -= damage
 
 
 '''Test'''

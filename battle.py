@@ -120,6 +120,24 @@ class Goblin(Warrior):
 
 
 class Battle:
+
     def __init__(self):
-        warr_name = input("Enter warrior name: ")
-        warr_type = input("Enter Warrion type - Elf, gnome, Ork: ")
+        return
+
+    def create_warrior(self, w_n, w_t):
+        if w_t == "Elf":
+            Elf.__init__(w_t, w_n)
+        elif w_t == "Gnome":
+            Gnome.__init__(w_t, w_n)
+        elif w_t == "Orc":
+            Orc.__init__(w_t, w_n)
+        else:
+            print("Incorrect warrior type")
+
+    num_of_warriors = input(" How many warriors you want to create?")
+    num_of_warriors = int(num_of_warriors)
+    for i in range(1, num_of_warriors):
+        warr_name = input("Enter #{} warrior name: ".format(i))
+        warr_type = input("Enter #{} warrior type - Elf, gnome, Ork: ".format(i))
+        create_warrior(warr_name, warr_type) #TypeError: create_warrior() missing 1 required positional argument: 'warr_type'
+        print("{} is created".format(warr_type))

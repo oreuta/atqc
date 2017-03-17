@@ -2,7 +2,6 @@ import pickle
 import random
 
 
-
 class Warrior():
     '''
     Warrior is a base class for all wariors in the Battle.
@@ -114,3 +113,13 @@ class Orc(Warrior):
         super().__init__(name, hsfactor)
         self.make_sound("I AM OOOOORC!!! ")
 
+
+class Goblin(Warrior):
+    def __init__(self, name, hsfactor=0.6):
+        super().__init__(name, hsfactor)
+
+
+class Battle:
+    def __init__(self):
+        warr_name = input("Enter warrior name: ")
+        warr_type = input("Enter Warrion type - Elf, gnome, Ork: ")

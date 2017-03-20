@@ -1,4 +1,5 @@
 import random
+import pickle
 
 class Warrior():
     '''
@@ -19,6 +20,9 @@ class Warrior():
         "oh!": "Oh!", 
         "...": "...", # Dead sound
         "fine": "I'm fine, tnx! My strength is {} and health is {}",
+        "wait": "I'm waiting, my strength now is {} and health is {}",
+        "saved": "{} saved to file",
+        "restored": "{} restored form file",
     }
     
     def __init__(self, name, hsfactor = 0.5):
@@ -74,11 +78,36 @@ class Warrior():
             self.make_sound(type(self)._mess["oh!"])
 
     def how_are_you(self):
-        self.make_sound("fine".format(
+        self.make_sound(type(self)._mess["fine"].format(
             self._strength,
             self._health
         ))
-        
+
+# Task 1.1 Define wait method
+
+    def wait(self):
+        self._health = round(self._health * 1.1)
+        self._strength = round(self._strength * 1.1)
+        self.make_sound(type(self)._mess["wait"].format(
+            self._strength,
+            self._health
+        ))
+
+# Task 1.2 Save to file/restore from file
+# Restore from file
+
+    def save(self, filename):
+        f = open(filename, 'wb')
+        pickle.dump(self, f)
+        f.close()
+        self.make_sound(type(self)._mess["saved"].format(self._name))
+
+    def restore(self, filename):
+        f = open(filename, 'rb')
+        obj = pickle.load(f)
+        self.__dict__.update(obj.__dict__)
+        f.close()
+        self.make_sound(type(self)._mess["restored"].format(self._name))
   
 
 class Orc(Warrior):
@@ -89,7 +118,11 @@ class Orc(Warrior):
         "oh!": "Uuuu...", 
         "...": ".o.", # Dead sound
         "fine": "Ha-ha! {}/{}",
+        "wait": "I'm waiting, my strength now is {} and health is {}",
+        "saved": "{} saved to file",
+        "restored": "{} restored form file",
     }
+
     def __init__(self, name):
         super().__init__(name, hsfactor=0.7)
 
@@ -105,6 +138,9 @@ class Elf(Warrior):
         "oh!": "Yes, it's hurt...", 
         "...": " ~~~ ", # Dead sound
         "fine": "Great! {}/{}",
+        "wait": "I'm waiting, my strength now is {} and health is {}",
+        "saved": "{} saved to file",
+        "restored": "{} restored form file",
     }
     def __init__(self, name):
         super().__init__(name, hsfactor=0.3)
@@ -124,6 +160,8 @@ class Gnome(Warrior):
         "oh!": "@d.$A!", 
         "...": " . ", # Dead sound
         "fine": "{}*{}",
+        "wait": "I'm waiting, my strength now is {} and health is {}",
+        "saved": "{} saved to file",
     }
     def __init__(self, name):
         super().__init__(name, hsfactor=0.5)

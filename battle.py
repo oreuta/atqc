@@ -13,7 +13,9 @@ class Warrior():
     # health   = __power * (1 - hsfactor)
     __power = 100
 
+
     @classmethod
+
     def get_power(cls):
         return cls.__power
     
@@ -21,6 +23,7 @@ class Warrior():
         self.__name = name.upper()
         self.__health = round(Warrior.get_power() * hsfactor)
         self.__strength = round(Warrior.get_power() * (1 - hsfactor))
+        self.__experience = 0
         power = self.__health + self.__strength # must be 1 after rounding
         if power > 1:
             self.__health - 1
@@ -90,11 +93,25 @@ class Warrior():
         print('{} saved'.format(self.__name))
 
 
-    def restore(filename):
+    def restore(self, filename):
         f = open(filename, 'rb')
-        self = pickle.load(f)
+        obj = pickle.load(f)
+        self.__dict__.update(obj.__dict__)
         f.close()
         print('{} restored'.format(self.__name))
+
+
+# Task 1.2 Define property "Experience"
+
+        @property
+        def experience(self):
+            return self.__experience
+
+        @experience.setter
+        def experience(self, damage):
+            if enemy.is_dead():
+                self.__experience = round(damage * 1.1)
+
 
 
 # Task 2: Add subclasses Elf, Gnome, Orc
@@ -102,7 +119,7 @@ class Warrior():
 class Elf(Warrior):        
     def __init__(self, name):
         Warrior.__init__(self, name, hsfactor=0.3)
-        self.make_sound = Warrior.make_sound
+        self.make_sound = ("I'm Elf!")
   
 
 class Gnome(Warrior):
@@ -112,6 +129,12 @@ class Gnome(Warrior):
 
 
 class Orc(Warrior):
-    def __init__(self, name):
-        Warrior.__init__(self, name, hsfactor=0.7)
-        self.make_sound = Warrior.make_sound
+    def __init__(self, name, hsfactor=0.7):
+        super(Orc, self).__init__(name)
+
+    def attack(self, enemy):
+        super(Orc, self).attack(enemy, damage = 10)
+
+
+# import importlib
+# importlib.reload(battle)

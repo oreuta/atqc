@@ -19,7 +19,7 @@ class Warrior():
         "oh!": "Oh!", 
         "...": "...", # Dead sound
         "fine": "I'm fine, tnx! My strength is {} and health is {}",
-		"default": "Are you really so stupid???"
+		"default": "Are you really so stupid?????"
     }
     
     def __init__(self, name, hsfactor = 0.5):

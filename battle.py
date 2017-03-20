@@ -1,3 +1,5 @@
+import pickle
+
 class Warrior():
     '''
     Warrior is a base class for all wariors in the Battle.
@@ -12,6 +14,11 @@ class Warrior():
     __power = 100
     __experience = 0
     
+    @classmethod
+    def get_mess(key):
+        return __d[key]
+
+
     @classmethod
     def get_power(cls):
         return cls.__power
@@ -80,8 +87,19 @@ class Warrior():
     def increase_experience(self):
         self.__experience += 1
         self.make_sound("Yahoooo my experience is increased! {}".format(self.__experience))
+    
 
-        
+    def save(self, filename):
+        with open('warrior_file.pkl', 'wb') as output:
+            pickle.dump(self, output, pickle.HIGHEST_PROTOCOL)
+        print("{} saved".format(self.__name))
+
+    def restore(self, filename):
+        with open(filename, 'rb') as inp:
+            obj = pickle.load(inp)
+        self.__dict__.update(obj.__dict__)
+        print("{} restored".format(self.__name))
+
 class Elf(Warrior):
     def __init__(self, name):
         super().__init__(name,  0.3)
@@ -97,12 +115,19 @@ class Gnome(Warrior):
         super().__init__(sound)
         self.make_sound("Pffff, I'm a super Gnome!")
 
+#class Orc(Warrior):
+#    def __init__(self, name):
+#        super().__init__(name, 0.7)
+#    def __init__(self, sound):
+#        super().__init__(sound)
+#        self.make_sound("Arrrrrrr, I'm a super Orc!")
+
 class Orc(Warrior):
-    def __init__(self, name):
-        super().__init__(name, 0.7)
-    def __init__(self, sound):
-        super().__init__(sound)
-        self.make_sound("Arrrrrrr, I'm a super Orc!")
+    def __init__(self, name, hsfactor=0.7):
+       super(Orc, self).__init__(name)
+       
+    def attack(self, enemy):
+        super(Orc, self).attack(enemy, damage=10)
 
 
 war1 = Elf("Princess Rose")
@@ -115,6 +140,7 @@ war1.wait()
 war1.wait()
 war1.attack(war2, 25)
 war1.attack(war3, 5)
+war1.save('war_fille.pkl')
 
 
     

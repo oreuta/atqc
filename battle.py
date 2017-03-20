@@ -57,7 +57,7 @@ class Warrior():
             return
 
         if damage > self._strength:
-            make_sound(type(self)._mess["hard"])
+            self.make_sound(type(self)._mess["hard"])
             return
         self.make_sound(type(self)._mess["hit"].format(damage))
 
@@ -113,7 +113,7 @@ class Orc(Warrior):
         "hard": "No. Weak",
         "hit": "Hrrrakh!!! {}",
         "oh!": "Uuuu...",
-        "...": ".o.",  # Dead sound
+        "...": "Ooops, it seems I'm dead X_X",  # Dead sound
         "fine": "Ha-ha! {}/{}",
         "wait": "I'm waiting, my strength now is {} and health is {}",
         "saved": "{} saved to file",
@@ -130,10 +130,10 @@ class Orc(Warrior):
 class Elf(Warrior):
     _mess = {
         "born": "A New Elf has been born! {} - {}",
-        "hard": "Not enough of magic...",
+        "hard": "Not enough magic...",
         "hit": "Get my magic sword! {} ",
         "oh!": "Yes, it's hurt...",
-        "...": " ~~~ ",  # Dead sound
+        "...": " Ooops, it seems I'm dead X_X",  # Dead sound
         "fine": "Great! {}/{}",
         "wait": "I'm waiting, my strength now is {} and health is {}",
         "saved": "{} saved to file",
@@ -156,7 +156,7 @@ class Gnome(Warrior):
         "hard": "No.",
         "hit": "Hit. {} ",
         "oh!": "@d.$A!",
-        "...": " . ",  # Dead sound
+        "...": " Ooops, it seems I'm dead X_X",  # Dead sound
         "fine": "{}*{}",
         "wait": "I'm waiting, my strength now is {} and health is {}",
         "saved": "{} saved to file",
@@ -179,7 +179,10 @@ class Battle:
         while not (self.__w1.is_dead() or self.__w2.is_dead()):
             self.__w1.attack(self.__w2)
             self.__w2.attack(self.__w1)
-
-        winnew = self.__w1 if self.__w2.is_dead() else self.__w2
-        print("GOD: This time {} was more lucky!".format(self.__w1.name))
+        winnew = ''
+        if self.__w2.is_dead():
+            winnew = self.__w1.name
+        elif self.__w1.is_dead():
+            winnew = self.__w2.name
+        print("The winner is: " + winnew)
 

@@ -52,7 +52,7 @@ class Warrior():
         print("{}: {}".format(self._name, sound))
 
     def attack(self, enemy, damage):
-        if self.is_dead():
+        if self.is_dead() or enemy.is_dead():
             print("GOD: {} is dead. I'm sorry...".format(self._name))
             return
 
@@ -166,7 +166,7 @@ class Gnome(Warrior):
         super().__init__(name, hsfactor=0.5)
 
     def attack(self, enemy):
-        damage = round(0.25 * self._strength)
+        damage = self._strength
         super().attack(enemy, damage)
 
 

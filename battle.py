@@ -188,17 +188,18 @@ class Battle:
                 print("The winner is: " + self.__w2.name)
 
 
-# This shit doesn't work properly...
+# This code doesn't work properly...
 
     def fight1(self):
         while min(len(self.__w1), len(self.__w2)) > 0:
             for i in range(min(len(w1), len(w2))):
-                self.__w1[0].attack(self.__w2[0])
-                if self.__w2[0].is_dead():
-                    del self.__w2[0]
-                self.__w2[0].attack(self.__w1[0])
-                if self.__w1[0].is_dead():
-                    del self.__w2[0]
+                x = random(0, min(len(self.__w1), len(self.__w2)))
+                self.__w1[x].attack(self.__w2[x])
+                if self.__w2[x].is_dead():
+                    del self.__w2[x]
+                self.__w2[x].attack(self.__w1[x])
+                if self.__w1[x].is_dead():
+                    del self.__w2[x]
         if len(self.__w1) == 0:
             print("The winner is w2")
         else:

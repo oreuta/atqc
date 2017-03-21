@@ -10,7 +10,14 @@ class Warrior():
     # strength = __power * hsfactor
     # health   = __power * (1 - hsfactor)
     __power = 100
+    __d = {
 
+    }
+
+    @classmethod
+    def get_mess(cls, key):
+        return cls.__d(key)
+    
     @classmethod
     def get_power(cls):
         return cls.__power
@@ -34,9 +41,9 @@ class Warrior():
 
     def make_sound(self, sound):
         print("{}: {}".format(self.__name, sound))   
-    
+
     def attack(self, enemy, damage):
-        self.damage += self.prop * 1,1
+        #self.damage += self.prop * 1,1
         if self.is_dead():
             print("GOD: {} is dead. I'm sorry...".format(self.__name))
             return
@@ -74,20 +81,20 @@ class Experience ():
 
     def __init__(self, _experience = 0):
         self._experience = 0
-        self.victorycount = 10
+        #self.victorycount = 10
         self._experience += self.victorycount
 
     @property
     def prop(self):
         return self._experience
 
-class Elf (Warrior):
-    def __init__(self):
-        Warrior.__init__(self)
-        self.make_sound("I was born before you were born! My strenght is {} and health is {}".format(
-            round(self.__strength),
-            round(self.__health)
-        ))
+class Orc (Warrior):
+    def __init__(self, name):
+        Warrior.__init__(self, name, hsfactor = 0.7)
+
+    def attack(self, enemy):
+        Warrior.attack(self, enemy, damage = 10)
+
     
     
 
